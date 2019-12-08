@@ -1,0 +1,90 @@
+---
+kind: pipeline
+type: docker
+name: default
+
+trigger:
+  event:
+  - push
+  - tag
+
+steps:
+  - name: latex build
+    image: nxzz/alpine-texlive-ja
+    commands:
+      - latexmk paper.tex
+    when:
+      event:
+      - push
+      - tag
+      status:
+      - success
+  - name: github orphan
+    image: bravissimolabs/alpine-git
+    commands:
+      - mv ./paper.pdf /tmp/paper.pdf
+      - git config --global user.email "bot@drone"
+      - git config --global user.name "bot"
+      - git checkout --orphan pdf
+      - git rm -rf .
+      - mv /tmp/paper.pdf ./
+      - git add -f paper.pdf
+      - git commit -m "latest pdf"
+      - git push -f origin pdf
+    when:
+      event:
+      - push
+      - tag
+      status:
+      - success
+  - name: github release
+    image: plugins/github-release
+    settings:
+      api_key:
+        from_secret: github_token
+      files: ./paper.pdf
+    when:
+      event:
+      - tag
+      status:
+      - success
+  - name: slack release
+    image: plugins/slack
+    settings:
+      channel: build-log
+      webhook: 
+        from_secret: slack_webhook
+      template: >
+        {{#success build.status}}
+          {{repo.owner}}/{{repo.name}} build {{build.number}} succeeded.
+          release to https://github.com/{{repo.owner}}/{{repo.name}}/releases/download/{{build.tag}}/paper.pdf
+          {{build.link}}
+        {{else}}
+          build {{build.number}} failed.
+          {{build.link}}
+        {{/success}}
+    when:
+      event:
+      - tag
+      status:
+      - success
+  - name: slack
+    image: plugins/slack
+    settings:
+      channel: build-log
+      webhook: 
+        from_secret: slack_webhook
+      template: >
+        {{#success build.status}}
+          {{repo.owner}}/{{repo.name}} build {{build.number}} succeeded.
+          push to https://github.com/{{repo.owner}}/{{repo.name}}/blob/pdf/paper.pdf
+          {{build.link}}
+        {{else}}
+          build {{build.number}} failed.
+          {{build.link}}
+        {{/success}}
+    when:
+      event:
+      - push
+      status:
+      - success

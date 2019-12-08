@@ -1,0 +1,23 @@
+
+\newcommand{\insertfigeps}[2]{%
+  \begin{figure}[tb]
+    \begin{center}
+      \leavevmode
+      \includegraphics[width=.80\textwidth]%
+      {figure/#1.eps}
+      \lcaption{#2}
+      \label{fig:#1}
+    \end{center}
+  \end{figure}}
+
+\newcommand{\insertfigpng}[2]{%
+  \begin{figure}[tb]
+    \begin{center}
+      \leavevmode
+      \includegraphics[width=.80\textwidth]%
+      {figure/#1.png}
+      \lcaption{#2}
+      \label{fig:#1}
+    \end{center}
+  \end{figure}}
+

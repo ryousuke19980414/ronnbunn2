@@ -1,0 +1,46 @@
+{
+  "files.exclude": {
+      "**/.git": true,
+      "**/.svn": true,
+      "**/.hg": true,
+      "**/.DS_Store": true,
+      "*.aux": true,
+      "*.fls": true,
+      "*.lot": true,
+      "*.ps": true,
+      "*.dvi": true,
+      "*.toc": true,
+      "*.blg": true,
+      "*.bbl": true,
+      "*.fdb_latexmk": true,
+      "*.lof": true
+  },
+  "latex-workshop.latex.recipes": [
+      {
+          "name": "toolchain",
+          "tools": [
+              "Step 1: latexmk"
+          ]
+      }
+  ],
+  "latex-workshop.latex.tools": [
+      {
+          "command": "latexmk",
+          "args": [
+              "paper.tex"
+          ],
+          "name": "Step 1: latexmk"
+      },
+      {
+          "command": "latexmk",
+          "args": [
+              "-c"
+          ],
+          "name": "Step 2: Clean"
+      }
+  ],
+  "latex-workshop.docker.enabled": true,
+  "latex-workshop.docker.image.latex": "nxzz/alpine-texlive-ja",
+"latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
+"liveServer.settings.port": 5501,
+}

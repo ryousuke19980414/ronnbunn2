@@ -1,0 +1,55 @@
+\documentclass[11pt]{sty/oecu-thesis}
+\usepackage{cite}
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{sty/subfigure}
+\usepackage{subcaption}
+\usepackage{sty/lcaption}
+\usepackage{times}
+\usepackage{url}
+\usepackage{amsmath}
+
+% もう少し具体的なタイトルにする。
+\title[ナップサック問題における動的計画法による解法の性能調査]{ナップサック問題における動的計画法での性能調査}
+\author{小野 遼介}
+\date{{令和}\rensuji{元}年\rensuji{12}月\rensuji{16}日}
+\学生番号{HT17A027}
+\指導教員{久松 潤之 准教授}
+
+% 特別研究の場合はコメントをはずす．卒業研究の場合はコメントアウトする．
+%\論文種別{特別研究論文}
+\年度{令和元}
+
+\所属{総合情報学部 情報学科}
+
+
+\begin{document}
+
+\input{tex/macro}
+
+%\makeextratitle
+\maketitle
+\pagenumbering{roman}
+\input{tex/abstract}
+
+\tableofcontents
+% 以下の二つは，論文のフォーマットにそっていないが，
+% 確認用のためにつける．論文提出時には，コメントアウトする．
+\listoffigures
+\listoftables
+\cleardoublepage
+
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
+\input{tex/intro}
+\input{tex/related}
+\input{tex/xxx}
+\input{tex/main}
+\input{tex/conclusion}
+\input{tex/acknowledgements}
+
+\bibliographystyle{junsrt}
+\bibliography{bib/myrefs}
+
+
+\end{document}
